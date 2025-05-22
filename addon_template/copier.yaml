@@ -110,6 +110,15 @@ custom_license:
         custom license text cannot be empty.
         {% endif %}
 
+license_duration_days:
+  type: int
+  help: "Enter the number of days the Add-on should remain usable after first use (e.g. 30)"
+  default: 30
+  validator: >-
+    {% if license_duration_days < 1 %}
+    License duration must be at least 1 day.
+    {% endif %}
+
 elements_to_include:
     type: str
     help: Choose element(s) to include in the Add-On
