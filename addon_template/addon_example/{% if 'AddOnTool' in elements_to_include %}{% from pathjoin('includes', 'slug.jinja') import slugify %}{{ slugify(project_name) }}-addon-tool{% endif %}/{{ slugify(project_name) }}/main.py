@@ -1,3 +1,9 @@
+from pathlib import Path
+from _dev_tools.addon_tasks.license import check_license
+
+BASE_PATH = Path(__file__).resolve().parents[2]
+check_license(BASE_PATH)
+
 import warnings
 import pandas as pd
 from IPython.display import clear_output
