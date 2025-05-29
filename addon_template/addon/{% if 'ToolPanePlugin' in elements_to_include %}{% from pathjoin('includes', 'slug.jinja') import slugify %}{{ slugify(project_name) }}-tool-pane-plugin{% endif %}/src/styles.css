@@ -121,3 +121,58 @@ h1 {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+#license-warning {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: yellow;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+    z-index: 1000;
+}
+
+.container {
+    position: relative;
+    padding-top: 60px; /* Make space for the banner */
+}
+
+.warning-banner {
+  background-color: yellow;
+  color: black;
+  font-weight: bold;
+  padding: 10px;
+  text-align: center;
+  display: none;
+  position: relative;
+}
+
+.warning-banner button {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  background: none;
+  border: none;
+  font-size: 1.2em;
+  cursor: pointer;
+}
+
+.license-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 0, 0.95);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 1.5em;
+  font-weight: bold;
+  padding: 20px;
+}

@@ -17,6 +17,8 @@ function registerHandlers() {
     getSeeqApi().then(_seeq => {
         seeq = _seeq;
         seeq.subscribeToSignals(signals => syncSignals(signals));
+
+        checkLicenseStatus();
     });
 }
 
@@ -122,3 +124,49 @@ function enableButtons() {
     document.getElementById("cancelButton").disabled = false;
     document.getElementById("executeButton").disabled = false;
 } 
+
+async function checkLicenseStatus() {
+    console.log("Checking license status...");
+
+    try {
+        const { projectId } = await seeq.getDataLabProject(DLF_PROJECT_NAME);
+        const rawResponse = await seeq.callDataLabApi({
+            projectId,
+            notebookName: "api",
+            method: "GET",
+            path: "/license-status"
+        });
+
+        console.log("DLF license status raw response:", rawResponse);
+
+        const banner = document.getElementById("license-warning");
+        const bannerMsg = document.getElementById("license-warning-message");
+        const overlay = document.getElementById("license-overlay");
+        const closeBtn = document.getElementById("license-warning-close");
+
+        // Reset both banner and overlay display states
+        if (overlay) overlay.style.display = 'none';
+        if (banner) banner.style.display = 'none';
+
+        if (typeof rawResponse === 'string') {
+            if (rawResponse.includes("🚫")) {
+                // License is expired
+                if (overlay) overlay.style.display = 'flex';
+                if (bannerMsg) bannerMsg.innerText = rawResponse;
+                if (banner) banner.style.display = 'block';
+            } else if (rawResponse.includes("⚠️")) {
+                // Warning about expiration
+                if (bannerMsg) bannerMsg.innerText = rawResponse;
+                if (banner) banner.style.display = 'block';
+                if (closeBtn && !closeBtn.dataset.bound) {
+                    closeBtn.addEventListener("click", () => {
+                        banner.style.display = "none";
+                    });
+                    closeBtn.dataset.bound = true; // Prevent duplicate event bindings
+                }
+            }
+        }
+    } catch (error) {
+        console.error("Failed to check license status:", error);
+    }
+}

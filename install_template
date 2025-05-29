@@ -117,8 +117,22 @@ info
 
 read -n1 -rp "Press any key to exit..."
 
+# if [[ "$(uname)" == "Darwin" ]]; then
+#     osascript -e 'tell application "Terminal" to close first window'
+# else
+#     echo -e "CLOSE THIS TERMINAL NOW AND OPEN A NEW ONE"
+# fi
+
 if [[ "$(uname)" == "Darwin" ]]; then
-    osascript -e 'tell application "Terminal" to close first window'
+    osascript <<EOF
+tell application "Terminal"
+    if (count of windows) > 0 then
+        try
+            close window 1
+        end try
+    end if
+end tell
+EOF
 else
     echo -e "CLOSE THIS TERMINAL NOW AND OPEN A NEW ONE"
 fi

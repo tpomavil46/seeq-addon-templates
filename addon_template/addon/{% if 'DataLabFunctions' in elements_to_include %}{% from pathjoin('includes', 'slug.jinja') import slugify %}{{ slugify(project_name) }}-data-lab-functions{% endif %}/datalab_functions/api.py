@@ -2,7 +2,11 @@ import pandas as pd
 from logging import Logger
 from seeq import spy
 from typing import Any
+from pathlib import Path
+from .license import check_license
 
+BASE_PATH = Path(__file__).parent
+check_license(BASE_PATH)
 
 def combine(REQUEST: Any, LOG: Logger) -> str:
     # Get params from request body

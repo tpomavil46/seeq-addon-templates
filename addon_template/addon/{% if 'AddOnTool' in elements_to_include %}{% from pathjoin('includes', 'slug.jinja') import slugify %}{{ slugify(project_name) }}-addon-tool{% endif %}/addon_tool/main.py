@@ -1,7 +1,7 @@
 from pathlib import Path
-from _dev_tools.addon_tasks.license import check_license
+from .license import check_license
 
-BASE_PATH = Path(__file__).resolve().parents[2]
+BASE_PATH = Path(__file__).parent
 check_license(BASE_PATH)
 
 import warnings

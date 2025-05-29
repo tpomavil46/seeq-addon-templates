@@ -1,7 +1,7 @@
 _exclude:
     - '**/__pycache__'
 
-_subdirectory: addon_example
+_subdirectory: addon
 
 
 _message_before_copy: |
@@ -59,7 +59,7 @@ project_version:
 project_icon:
     type: str
     help: Enter fontawesome icon name. This will be shown in the Add-on Manager. (see fontawesome.com/v4/icons) # TODO: I don't think this list is right
-    default: fa-bullseye
+    default: fa-eye
     validator: >-
         {% if not project_icon %}
         icon cannot be empty
