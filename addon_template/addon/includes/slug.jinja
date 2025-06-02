@@ -1,3 +1,0 @@
-{% macro slugify(value) %}
-  {{ value | lower | replace(" ", "-") | regex_replace("[^a-z0-9_-]", "") }}
-{% endmacro %}
